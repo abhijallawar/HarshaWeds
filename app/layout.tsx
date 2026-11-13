@@ -9,16 +9,17 @@ const body = localFont({ src: "./fonts/dm-sans.woff2", variable: "--font-body", 
 
 const title = wedding.names.join(" weds ");
 const description = "An invitation to the wedding of " + wedding.names.join(" and ") + ".";
+const deploymentHost = process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL;
 const previewImage = {
-  url: "/art/abhi-weds-harsha-preview.jpg",
+  url: "/art/harsha-weds-abhilash-preview.png",
   width: 954,
   height: 1649,
-  type: "image/jpeg",
-  alt: "Illustrated wedding invitation cover with a floral border, a portrait of the couple, and the words Abhi weds Harsha",
+  type: "image/png",
+  alt: "Illustrated wedding invitation cover with a floral border and a portrait of Harsha and Abhilash",
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://abhiwedsharsha.vercel.app"),
+  metadataBase: new URL(deploymentHost ? `https://${deploymentHost}` : "http://localhost:3000"),
   title,
   description,
   openGraph: { type: "website", url: "/", title, description, images: [previewImage] },
