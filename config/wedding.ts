@@ -2,8 +2,8 @@
 export const wedding = {
   year: 2026,
   timezone: "Asia/Kolkata",
-  names: ["Abhilash", "Harsha"],
-  monogram: "A & H",
+  names: ["Harsha", "Abhilash"],
+  monogram: "H & A",
   music: { src: "/music/wedding-soundtrack-trimmed.mp3" },
   copy: {
     welcome: "Together with our families",
