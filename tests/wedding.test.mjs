@@ -5,7 +5,7 @@ import { calendar, ceremony, ceremonyDate, countdown, dateLabel, eventDate, even
 
 test("the Haldi and wedding start times match the supplied IST times and calendar downloads", () => {
   const expected = [
-    ["haldi", "2026-12-11T06:30:00Z", "12:00 pm"],
+    ["haldi", "2026-12-11T06:00:00Z", "11:30 am"],
     ["wedding", "2026-12-12T06:37:00Z", "12:07 pm"],
   ];
   assert.deepEqual(events.map(({ id }) => id), expected.map(([id]) => id));
@@ -37,8 +37,8 @@ test("the countdown handles elapsed time, the exact instant and invalid dates", 
 
 test("Haldi uses Myakalwar House and the wedding uses Jijau Lawn", () => {
   const haldi = events.find(({ id }) => id === "haldi");
-  const invite = calendar(haldi);
-  assert.match(invite, /(?:^|\r\n)LOCATION:Myakalwar House\r\n/);
+  const invite = calendar(haldi).replace(/\r\n /g, "");
+  assert.ok(invite.includes("LOCATION:Myakalwar House\\, Vishwakarma Chowk\\, Indira Nagar\\, Chandrapur\\, MH\r\n"));
   assert.ok(invite.includes("URL:https://maps.app.goo.gl/5rFR7adpDf3xCteD9\r\n"));
   assert.equal(wedding.venues.wedding.directions, "https://maps.app.goo.gl/uqsHPUvWJAgitZ7t5");
   assert.equal(wedding.venues.wedding.name, "Jijau Lawn · Datala Rd, Chandrapur MH.");

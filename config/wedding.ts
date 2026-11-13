@@ -21,7 +21,7 @@ export const wedding = {
       title: "Haldi",
       emblem: "haldi",
       name: "Myakalwar House",
-      address: null as string | null,
+      address: "Vishwakarma Chowk, Indira Nagar, Chandrapur, MH",
       locality: null,
       directions: "https://maps.app.goo.gl/5rFR7adpDf3xCteD9",
     },
@@ -35,7 +35,7 @@ export const wedding = {
     },
   },
   events: [
-    { id: "haldi", name: "Haldi", month: 12, day: 11, time: "12:00", venue: "haldi" },
+    { id: "haldi", name: "Haldi", month: 12, day: 11, time: "11:30", venue: "haldi" },
     { id: "wedding", name: "Wedding", month: 12, day: 12, time: "12:07", venue: "wedding", line: "Join us as we take our vows and begin our married life." },
   ],
   ceremonyId: "wedding",
