@@ -3,12 +3,10 @@ import { test } from "node:test";
 import { wedding } from "../config/wedding.ts";
 import { calendar, ceremony, ceremonyDate, countdown, dateLabel, eventDate, events, timeLabel } from "../lib/wedding.ts";
 
-test("all four event starts match the supplied IST times and calendar downloads", () => {
+test("the Haldi and wedding start times match the supplied IST times and calendar downloads", () => {
   const expected = [
     ["haldi", "2026-12-11T06:30:00Z", "12:00 pm"],
-    ["sangeet", "2026-12-11T14:00:00Z", "7:30 pm"],
     ["wedding", "2026-12-12T06:37:00Z", "12:07 pm"],
-    ["reception", "2026-12-13T13:30:00Z", "7:00 pm"],
   ];
   assert.deepEqual(events.map(({ id }) => id), expected.map(([id]) => id));
   for (const [index, [, iso, display]] of expected.entries()) {
@@ -37,15 +35,11 @@ test("the countdown handles elapsed time, the exact instant and invalid dates", 
   assert.equal(calendar({ ...ceremony, day: 32 }), null);
 });
 
-test("the supplied directions remain distinct and only known addresses can be copied", () => {
-  assert.deepEqual(Object.values(wedding.venues).map((venue) => venue.directions), [
-    "https://maps.app.goo.gl/9a8JMo26DyrvSDoZ8",
-    "https://maps.app.goo.gl/uqsHPUvWJAgitZ7t5",
-    "https://maps.app.goo.gl/KD9eEKvNETC8Y5VK6",
-  ]);
-  assert.equal(wedding.venues.sindewahi.address, null);
-  for (const event of events.filter(({ venue }) => venue === "sindewahi")) {
-    assert.match(calendar(event), /^LOCATION:Jallawar Residency\\,/m);
-  }
+test("Haldi uses Myakalwar House and the wedding uses Jijau Lawn", () => {
+  const haldi = events.find(({ id }) => id === "haldi");
+  const invite = calendar(haldi);
+  assert.match(invite, /(?:^|\r\n)LOCATION:Myakalwar House\r\n/);
+  assert.ok(invite.includes("URL:https://maps.app.goo.gl/5rFR7adpDf3xCteD9\r\n"));
+  assert.equal(wedding.venues.wedding.directions, "https://maps.app.goo.gl/uqsHPUvWJAgitZ7t5");
   assert.equal(wedding.venues.wedding.name, "Jijau Lawn · Datala Rd, Chandrapur MH.");
 });
